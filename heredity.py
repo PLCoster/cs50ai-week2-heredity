@@ -139,7 +139,65 @@ def joint_probability(people, one_gene, two_genes, have_trait):
         * everyone in set `have_trait` has the trait, and
         * everyone not in set` have_trait` does not have the trait.
     """
-    raise NotImplementedError
+
+    joint_prob = 1
+
+    # Iterate all people in the family:
+
+    for person in people:
+
+        person_prob = 1
+        person_genes = (2 if person in two_genes else 1 if person in one_gene else 0)
+        person_trait = person in have_trait
+
+        mother = people[person]['mother']
+        father = people[person]['father']
+
+        # If person has no parents, use standard gene probability:
+        if not mother and not father:
+            person_prob *= PROBS['gene'][person_genes]
+
+        # Otherwise need to calculate probabilit of num_genes from parents:
+        else:
+            mother_prob = inherit_prob(mother, one_gene, two_genes)
+            father_prob = inherit_prob(father, one_gene, two_genes)
+
+            if person_genes == 2:
+              person_prob *= mother_prob * father_prob
+            elif person_genes == 1:
+              person_prob *= (1 - mother_prob) * father_prob + (1 - father_prob) * mother_prob
+            else:
+              person_prob *= (1 - mother_prob) * (1 - father_prob)
+
+        # Multiply by the probability of the person with X genes having / not having the trait:
+        person_prob *= PROBS['trait'][person_genes][person_trait]
+
+        joint_prob *= person_prob
+
+    # Return the calculated joint probability of this 'possible world'
+    return joint_prob
+
+
+
+def inherit_prob(parent_name, one_gene, two_genes):
+    """
+    Returns the probability of a parent giving a copy of the mutated gene to their child.
+
+    Takes:
+    - parent_name - the name of the parent
+    - one_gene - set of people having 1 copy of the gene
+    - two_genes - set of people having two copies of the gene.
+    """
+
+    if parent_name in two_genes:
+        return 1 - PROBS['mutation']
+    elif parent_name in one_gene:
+        return 0.5
+    else:
+        return PROBS['mutation']
+
+
+
 
 
 def update(probabilities, one_gene, two_genes, have_trait, p):
