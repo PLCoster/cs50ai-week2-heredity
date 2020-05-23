@@ -178,9 +178,10 @@ def joint_probability(people, one_gene, two_genes, have_trait):
     return joint_prob
 
 
-
 def inherit_prob(parent_name, one_gene, two_genes):
     """
+    joint_probability helper function
+
     Returns the probability of a parent giving a copy of the mutated gene to their child.
 
     Takes:
@@ -197,9 +198,6 @@ def inherit_prob(parent_name, one_gene, two_genes):
         return PROBS['mutation']
 
 
-
-
-
 def update(probabilities, one_gene, two_genes, have_trait, p):
     """
     Add to `probabilities` a new joint probability `p`.
@@ -207,7 +205,15 @@ def update(probabilities, one_gene, two_genes, have_trait, p):
     Which value for each distribution is updated depends on whether
     the person is in `have_gene` and `have_trait`, respectively.
     """
-    raise NotImplementedError
+
+    # Iterate over all people:
+    for person in probabilities:
+        person_genes = (2 if person in two_genes else 1 if person in one_gene else 0)
+        person_trait = person in have_trait
+
+        # Update person probability distributions for gene and trait
+        probabilities[person]['gene'][person_genes] += p
+        probabilities[person]['trait'][person_trait] += p
 
 
 def normalize(probabilities):
@@ -215,7 +221,16 @@ def normalize(probabilities):
     Update `probabilities` such that each probability distribution
     is normalized (i.e., sums to 1, with relative proportions the same).
     """
-    raise NotImplementedError
+    # Iterate over all people:
+    for person in probabilities:
+
+        # Calculate the total probability for each distribution
+        gene_prob_sum = sum(probabilities[person]['gene'].values())
+        trait_prob_sum = sum(probabilities[person]['trait'].values())
+
+        # Normalise each distribution to 1:
+        probabilities[person]['gene'] = { genes: (prob / gene_prob_sum) for genes, prob in probabilities[person]['gene'].items()}
+        probabilities[person]['trait'] = { trait: (prob / trait_prob_sum) for trait, prob in probabilities[person]['trait'].items()}
 
 
 if __name__ == "__main__":
