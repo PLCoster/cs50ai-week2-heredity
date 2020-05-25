@@ -33,7 +33,7 @@ where:
 - X is the query variable
 - e is the evidence (knowledge we hold about the family)
 - **P**(X | e) is the probability distribution of variable X given knowledge e
-- \[\alpha\] is a normalisation factor (the sum of probabilities for query variable X must be 1)
+- _&alpha;_ is a normalisation factor (the sum of probabilities for query variable X must be 1)
 - y ranges over all values of all hidden variables
 
 In essence, to find the probability distribution for the number of genes each person possesses, and whether or not they will have the trait (if not already known), we must:
