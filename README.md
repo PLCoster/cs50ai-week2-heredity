@@ -27,7 +27,9 @@ Given a family tree with several members, some being parents to others, and some
 
 One way to do this is using Inference by enumeration, which can be expressed using the equation below:
 
-![\boldsymbol{P}(X|e) = \alpha \mathbf{P}(X, e) = \alpha \sum_{y} \mathbf{P}(X, e, y)](https://render.githubusercontent.com/render/math?math=%5Cboldsymbol%7BP%7D(X%7Ce)%20%3D%20%5Calpha%20%5Cmathbf%7BP%7D(X%2C%20e)%20%3D%20%5Calpha%20%5Csum_%7By%7D%20%5Cmathbf%7BP%7D(X%2C%20e%2C%20y))
+![equation](https://latex.codecogs.com/svg.latex?%5Cboldsymbol%7BP%7D%28X%7Ce%29%20%3D%20%5Calpha%20%5Cmathbf%7BP%7D%28X%2C%20e%29%20%3D%20%5Calpha%20%5Csum_%7By%7D%20%5Cmathbf%7BP%7D%28X%2C%20e%2C%20y%29)
+
+<1-- ![\boldsymbol{P}(X|e) = \alpha \mathbf{P}(X, e) = \alpha \sum_{y} \mathbf{P}(X, e, y)](https://render.githubusercontent.com/render/math?math=%5Cboldsymbol%7BP%7D(X%7Ce)%20%3D%20%5Calpha%20%5Cmathbf%7BP%7D(X%2C%20e)%20%3D%20%5Calpha%20%5Csum_%7By%7D%20%5Cmathbf%7BP%7D(X%2C%20e%2C%20y)) -->
 
 where:
 - X is the query variable
